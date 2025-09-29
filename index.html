@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevKit - Crafting Interfaces for Ambitious SaaS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #E2E8F0;
+        }
+        #hero-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38BDF8, #A78BFA, #38BDF8);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 5s ease infinite;
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.4), 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+        .service-card {
+            border: 1px solid #27272A;
+            transition: all 0.3s ease;
+            background-color: rgba(15, 23, 42, 0.3); /* semi-transparent slate */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .service-card:hover {
+            border-color: #38BDF8;
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+        .tech-icon {
+            transition: all 0.3s ease;
+        }
+        .tech-icon:hover {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        /* Animations */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        .is-visible {
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <canvas id="hero-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-xl border-b border-slate-800/50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold gradient-text">
+                    DevKit
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-slate-300 hover:text-sky-400 transition-colors">Services</a>
+                    <a href="#work" class="text-slate-300 hover:text-sky-400 transition-colors">Our Work</a>
+                    <a href="#contact" class="bg-sky-500 text-white font-semibold px-5 py-2 rounded-lg cta-button">Contact Us</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
+            <a href="#services" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Services</a>
+            <a href="#work" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Our Work</a>
+            <a href="#contact" class="block text-center py-4 px-4 text-sm bg-sky-500 text-white font-semibold">Contact Us</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 md:pt-48 md:pb-28 text-center overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="bg-sky-500 text-white text-xs font-semibold px-4 py-1 rounded-full inline-block mb-4">Your Expert Front-End Partner</div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
+                    Your <span class="gradient-text">Unfair Advantage</span><br> in SaaS Development
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-400 mb-10">
+                    We craft elegant, high-performance user interfaces that turn your complex SaaS application into an intuitive, delightful experience your customers will love.
+                </p>
+                <a href="#contact" class="bg-sky-500 text-white font-semibold px-8 py-4 rounded-lg cta-button text-lg">
+                    Book a Free Discovery Call
+                </a>
+            </div>
+        </section>
+
+        <!-- Problem / Pain Points Section -->
+        <section id="problem" class="py-20 bg-black reveal-on-scroll">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Is Your Front-End Holding You Back?</h2>
+                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We understand the unique challenges SaaS companies face. We're here to solve them.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Pain Point 1 -->
+                    <div class="service-card p-8 rounded-xl">
+                        <svg class="w-10 h-10 text-sky-400 mb-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <h3 class="text-xl font-semibold text-white mb-2">Slow Feature Velocity</h3>
+                        <p class="text-slate-400">Your back-end team gets bogged down with complex CSS and state management, delaying your product roadmap.</p>
+                    </div>
+                    <!-- Pain Point 2 -->
+                    <div class="service-card p-8 rounded-xl">
+                         <svg class="w-10 h-10 text-sky-400 mb-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 6.75l.493 2.643A2.25 2.25 0 0012.5 11.25h.044a2.25 2.25 0 002.207-1.856l.493-2.643m-4.434 0a5.249 5.249 0 014.434 0M1.5 15h21m-21 0a8.25 8.25 0 0010.875 6.433 8.25 8.25 0 0010.875-6.433m-21 0s3.375-4.5 10.875-4.5 10.875 4.5 10.875 4.5" /></svg>
+                        <h3 class="text-xl font-semibold text-white mb-2">Inconsistent UX</h3>
+                        <p class="text-slate-400">Your UI feels disjointed and dated, frustrating users and increasing churn. Consistency is key to a great product.</p>
+                    </div>
+                    <!-- Pain Point 3 -->
+                    <div class="service-card p-8 rounded-xl">
+                        <svg class="w-10 h-10 text-sky-400 mb-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+                        <h3 class="text-xl font-semibold text-white mb-2">High Technical Debt</h3>
+                        <p class="text-slate-400">A fragile and complex codebase makes every new feature a challenge, stifling innovation and growth.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section id="services" class="py-20 reveal-on-scroll">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">A Dedicated Partner for Your Front-End</h2>
+                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We don't just write code; we build lasting front-end systems that accelerate your business.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="service-card p-8 rounded-xl">
+                        <span class="text-sky-400 font-bold">01</span>
+                        <h3 class="text-2xl font-semibold text-white my-4">UI Kickstarter</h3>
+                        <p class="text-slate-400 mb-6">For early-stage startups needing a rock-solid foundation. We transform your designs into a pixel-perfect, reusable component library so your team can build features twice as fast.</p>
+                        <a href="#contact" class="text-sky-400 font-semibold hover:text-sky-300">Get Started &rarr;</a>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="service-card p-8 rounded-xl">
+                        <span class="text-sky-400 font-bold">02</span>
+                        <h3 class="text-2xl font-semibold text-white my-4">Feature Sprint</h3>
+                        <p class="text-slate-400 mb-6">For teams needing to accelerate their product roadmap. We provide a dedicated 2-4 week sprint to build and deliver a single, high-impact feature, like a new dashboard or settings module.</p>
+                        <a href="#contact" class="text-sky-400 font-semibold hover:text-sky-300">Launch a Feature &rarr;</a>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="service-card p-8 rounded-xl">
+                        <span class="text-sky-400 font-bold">03</span>
+                        <h3 class="text-2xl font-semibold text-white my-4">Dedicated Front-End Team</h3>
+                        <p class="text-slate-400 mb-6">For established companies seeking a long-term expert partner. We manage, maintain, and continuously improve your UI, acting as your full-time front-end team.</p>
+                        <a href="#contact" class="text-sky-400 font-semibold hover:text-sky-300">Build a Partnership &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Work Section -->
+        <section id="work" class="py-20 bg-black reveal-on-scroll">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Delivering Tangible Results</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl mx-auto mb-12">We are proud of our work. The results speak for themselves.</p>
+                
+                <div id="work-grid" class="grid md:grid-cols-2 gap-8 text-left">
+                    <div id="no-projects-message" class="md:col-span-2 p-16 bg-slate-900 rounded-xl border border-slate-800">
+                        <h3 class="text-2xl font-semibold text-white">Our Case Studies Are Coming Soon!</h3>
+                        <p class="text-slate-400 mt-2">We're preparing detailed case studies of our recent projects. To add a project, edit the 'projects' list in the script below.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Trusted By Section -->
+        <section class="py-20 reveal-on-scroll">
+            <div class="container mx-auto px-6 text-center">
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Trusted by the next generation of SaaS leaders</h3>
+                <div class="flex flex-wrap items-center justify-center gap-x-8 md:gap-x-16 gap-y-8 mt-8 opacity-60">
+                    <img src="https://placehold.co/120x40/000000/94A3B8?text=InnovateCo" alt="InnovateCo Logo" class="h-8 tech-icon grayscale hover:grayscale-0">
+                    <img src="https://placehold.co/120x40/000000/94A3B8?text=NextGen+AI" alt="NextGen AI Logo" class="h-8 tech-icon grayscale hover:grayscale-0">
+                    <img src="https://placehold.co/120x40/000000/94A3B8?text=DataStream" alt="DataStream Logo" class="h-8 tech-icon grayscale hover:grayscale-0">
+                    <img src="https://placehold.co/120x40/000000/94A3B8?text=CloudLeap" alt="CloudLeap Logo" class="h-8 tech-icon grayscale hover:grayscale-0">
+                    <img src="https://placehold.co/120x40/000000/94A3B8?text=QuantumDB" alt="QuantumDB Logo" class="h-8 tech-icon grayscale hover:grayscale-0">
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section id="tech-stack" class="py-20 bg-black reveal-on-scroll">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Technologies We Master</h2>
+                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We use a modern, battle-tested stack to ensure quality and performance. While this is our core toolkit, we are fully adaptable. We are happy to work within your existing technology stack, whether it includes Angular, Svelte, or any other modern front-end framework.</p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-x-8 md:gap-x-12 gap-y-8">
+                    <img src="https://placehold.co/100x40/000000/E2E8F0?text=React" alt="React" class="h-10 tech-icon" title="React">
+                    <img src="https://placehold.co/120x40/000000/E2E8F0?text=Next.js" alt="Next.js" class="h-10 tech-icon" title="Next.js">
+                    <img src="https://placehold.co/100x40/000000/E2E8F0?text=Vue.js" alt="Vue.js" class="h-10 tech-icon" title="Vue.js">
+                    <img src="https://placehold.co/140x40/000000/E2E8F0?text=TypeScript" alt="TypeScript" class="h-10 tech-icon" title="TypeScript">
+                    <img src="https://placehold.co/160x40/000000/E2E8F0?text=Tailwind+CSS" alt="Tailwind CSS" class="h-10 tech-icon" title="Tailwind CSS">
+                    <img src="https://placehold.co/130x40/000000/E2E8F0?text=Storybook" alt="Storybook" class="h-10 tech-icon" title="Storybook">
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Philosophy Section -->
+        <section id="philosophy" class="py-20 reveal-on-scroll">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">A Guild of Front-End Specialists</h2>
+                <p class="text-slate-400 mt-4 max-w-3xl mx-auto">
+                    DevKit is not a generalist agency. We are a dedicated team of passionate front-end developers who live and breathe component-based architecture, pixel-perfect design, and high-performance code. We believe a world-class user interface is the most critical part of any successful SaaS product, and that is our sole focus.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact / Final CTA Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="service-card rounded-2xl p-10 md:p-16 text-center reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Ready to Elevate Your User Experience?</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto mb-8">Fill out the form below, and we'll be in touch within 24 hours to schedule your free, no-obligation discovery call.</p>
+                    
+                    <form action="https://formspree.io/f/meorarne" method="POST" class="max-w-xl mx-auto text-left">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="sr-only">Full Name</label>
+                                <input type="text" name="name" id="name" placeholder="Your Full Name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+                            </div>
+                            <div>
+                                <label for="email" class="sr-only">Email Address</label>
+                                <input type="email" name="email" id="email" placeholder="Your Email Address" required class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="message" class="sr-only">Your Message</label>
+                            <textarea name="message" id="message" rows="5" placeholder="Tell us a little about your project..." required class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all mb-6"></textarea>
+                        </div>
+                        <button type="submit" class="bg-sky-500 text-white font-semibold px-8 py-4 rounded-lg cta-button text-lg w-full">
+                            Send Your Inquiry
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-400">
+            <p>&copy; 2025 DevKit. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Founded by Ruthwik Goparaju.</p>
+            <p class="text-sm mt-2">Based in Hyderabad, India - Serving clients globally.</p>
+            <div class="mt-6 border-t border-slate-800/50 pt-6">
+                 <p class="text-lg font-semibold text-white">Want to join us?</p>
+                 <p class="text-sm mt-2 mb-6">We're always looking for passionate learners and future front-end leaders.</p>
+                 <a href="mailto:studiodevkit@gmail.com?subject=Internship Application via Website" class="bg-slate-800 text-sky-400 border border-sky-400/50 font-semibold px-6 py-3 rounded-lg cta-button text-base">
+                    Apply for Internship
+                 </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div class="bg-slate-900 p-8 rounded-xl border border-slate-700 w-full max-w-sm">
+            <h3 class="text-xl font-bold text-white mb-4 text-center">Admin Login</h3>
+            <p id="admin-error" class="text-red-400 text-sm mb-4 text-center hidden">Invalid Password</p>
+            <input type="password" id="admin-password" placeholder="Enter Admin Password" class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all mb-4">
+            <button id="admin-login-button" class="bg-sky-500 text-white font-semibold px-8 py-3 rounded-lg cta-button w-full">Unlock Editor</button>
+        </div>
+    </div>
+
+    <!-- Editor Mode Banner -->
+    <div id="editor-banner" class="hidden fixed top-0 left-0 right-0 bg-yellow-500 text-black text-center p-2 z-50">
+        <strong>Editor Mode Active.</strong> Changes made here are for preview only and will not be saved.
+    </div>
+
+
+    <script>
+        // --- ADMIN SECTION: EDIT YOUR PROJECTS HERE ---
+        const projects = [
+            {
+                title: "Fintech SaaS Dashboard",
+                description: "A complete overhaul of a financial analytics platform's user interface, focusing on data clarity and user experience. Built with React and TypeScript.",
+                imageUrl: "https://placehold.co/600x400/0F172A/38BDF8?text=Project+1",
+                caseStudyUrl: "#" 
+            },
+            {
+                title: "HealthTech Patient Portal",
+                description: "Designed and developed a responsive and accessible patient portal, allowing users to easily manage their appointments and medical records. Built with Vue.js.",
+                imageUrl: "https://placehold.co/600x400/0F172A/A78BFA?text=Project+2",
+                caseStudyUrl: "#"
+            },
+        ];
+
+        // --- SCRIPT TO DISPLAY YOUR PROJECTS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const workGrid = document.getElementById('work-grid');
+            const noProjectsMessage = document.getElementById('no-projects-message');
+
+            if (projects && projects.length > 0) {
+                noProjectsMessage.style.display = 'none';
+                workGrid.innerHTML = ''; 
+                projects.forEach(project => {
+                    const projectCard = `
+                        <div class="service-card rounded-xl overflow-hidden group">
+                            <img src="${project.imageUrl}" alt="${project.title}" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-white mb-2">${project.title}</h3>
+                                <p class="text-slate-400 mb-4">${project.description}</p>
+                                <a href="${project.caseStudyUrl}" class="text-sky-400 font-semibold hover:text-sky-300">View Case Study &rarr;</a>
+                            </div>
+                        </div>
+                    `;
+                    workGrid.innerHTML += projectCard;
+                });
+            } else {
+                noProjectsMessage.style.display = 'block';
+            }
+        });
+
+        // --- SECRET ADMIN PANEL LOGIC ---
+        const ADMIN_PASSWORD = "devkit_admin_2025";
+        let keySequence = [];
+        const secretCode = ['Escape', 'a', 'd', 'm', 'i', 'n'];
+        document.addEventListener('keydown', (e) => {
+            keySequence.push(e.key);
+            keySequence = keySequence.slice(-secretCode.length);
+            if (keySequence.join('') === secretCode.join('')) {
+                document.getElementById('admin-modal').classList.remove('hidden');
+                document.getElementById('admin-password').focus();
+                keySequence = [];
+            }
+        });
+        document.getElementById('admin-login-button').addEventListener('click', () => {
+            const passwordInput = document.getElementById('admin-password');
+            const errorMsg = document.getElementById('admin-error');
+            if (passwordInput.value === ADMIN_PASSWORD) {
+                document.getElementById('admin-modal').classList.add('hidden');
+                errorMsg.classList.add('hidden');
+                passwordInput.value = '';
+                enableEditorMode();
+            } else {
+                errorMsg.classList.remove('hidden');
+                passwordInput.value = '';
+            }
+        });
+        document.getElementById('admin-modal').addEventListener('click', function(e) {
+            if (e.target === this) { this.classList.add('hidden'); }
+        });
+        function enableEditorMode() {
+            document.getElementById('editor-banner').classList.remove('hidden');
+            const editableElements = document.querySelectorAll('h1, h2, h3, p, span.gradient-text');
+            editableElements.forEach(el => {
+                if(!el.closest('form') && !el.closest('footer')) {
+                    el.contentEditable = true;
+                    el.style.outline = '1px dashed #38BDF8';
+                    el.style.cursor = 'text';
+                }
+            });
+            document.querySelector('header').style.top = '40px';
+        }
+
+        // --- Scroll Animation Logic ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a, header nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if(!mobileMenu.classList.contains('hidden')) {
+                   mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // --- COOL HERO CANVAS ANIMATION ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        function createParticles() {
+            particles = [];
+            let particleCount = Math.floor(canvas.width * canvas.height / 20000);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 1.5 + 1,
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(167, 139, 250, 0.5)'; // Purple dots
+            
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.1)'; // Blue lines
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function updateParticles() {
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            });
+        }
+
+        function animate() {
+            drawParticles();
+            updateParticles();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createParticles();
+        });
+
+        resizeCanvas();
+        createParticles();
+        animate();
+    </script>
+</body>
+</html>
+
